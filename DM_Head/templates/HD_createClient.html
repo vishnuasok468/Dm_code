@@ -1,0 +1,238 @@
+{% extends 'HD_base.html' %}
+{% load static %}
+{% block body %}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="text-underline-remove" href="{% url 'head_dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item active text-md" aria-current="page">Client Creation</li>
+        </ol>
+      </nav>
+</div>
+
+<div class="row">
+
+  <div class="col-md-12 col-xl-12 grid-margin stretch-card">
+     
+          <div class="card" id="schedule-add" >
+              <div class="card-body">
+                  <h4 class="card-title">Basic Information </h4>
+                  <form action="{% url 'head_createClient' %}" method="post" enctype="multipart/form-data" >
+
+                      {% csrf_token %}
+                      
+                      <div class="row mt-4">
+                        <div class="col-sm-12 col-lg-4 col-md-12">
+                          <div class="form-group add-items">
+                            <label>Client Name *</label>
+                            <input type="text" class="form-control  text-offwhite" name="cName"  placeholder="enter client fullname.." required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Email id *</label>
+                            <input type="email" class="form-control  text-offwhite" name="cEmail_1"   placeholder="enter email id" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Alternative email id </label>
+                            <input type="email" class="form-control  text-offwhite" name="cEmail_2"  placeholder="enter email id">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-6 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Phnone number * </label>
+                            <input type="tel" class="form-control  text-offwhite" name="cPhno_1"  placeholder="enter phone number" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-6 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Alternative phnone number </label>
+                            <input type="tel" class="form-control  text-offwhite" name="cPhno_2"  placeholder="enter alternative phone number">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Address line 1 </label>
+                            <input type="text" class="form-control  text-offwhite" id="cAdd1" name="cAddress1"  placeholder="enter Address line " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Address line 2 </label>
+                            <input type="text" class="form-control  text-offwhite" name="cAddress2" id="cAdd2" placeholder="enter Address line " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Address line 3 </label>
+                            <input type="text" class="form-control  text-offwhite" name="cAddress3" id="cAdd3"  placeholder="enter Address line ">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Place </label>
+                            <input type="text" class="form-control  text-offwhite" name="cPlace" id="cloc"  placeholder="enter Place " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3 col-md-6">
+                          <div class="form-group add-items">
+                            <label>District </label>
+                            <input type="text" class="form-control  text-offwhite" name="cDistrict" id="cdist" placeholder="enter District " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3 col-md-6">
+                          <div class="form-group add-items">
+                            <label>State </label>
+                            <input type="text" class="form-control  text-offwhite" name="cState" id="cstate"  placeholder="enter State "required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Profile </label>
+                            <input type="file" class="form-control  text-offwhite" name="cProfile" >  
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mt-4">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                          <div class="form-group add-items">
+                            
+                            <input type="checkbox" class=" text-offwhite mr-2" name="" id="copy-details">
+                            <span class="small">Check if address is same</span> 
+                           
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="card-title mt-2">Bussiness Information </h4>
+
+                      <div class="row mt-3">
+                        <div class="col-sm-12 col-lg-4 col-md-12">
+                          <div class="form-group add-items">
+                            <label> Bussiness Name *</label>
+                            <input type="text" class="form-control  text-offwhite" name="cBussinessName"  placeholder="enter bussiness name" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Bussiness email id *</label>
+                            <input type="email" class="form-control  text-offwhite" name="cBussinessEmail_1"  placeholder="enter email id" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Alternative email id </label>
+                            <input type="email" class="form-control  text-offwhite" name="cBussinessEmail_2"  placeholder="enter email id">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Website URL</label>
+                            <input type="url" class="form-control  text-offwhite" name="cBussinessUrl"  placeholder="enter website url">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Phnone number </label>
+                            <input type="tel" class="form-control  text-offwhite" name="cBussinessPhno_1"  placeholder="enter phone number" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Alternative phnone number </label>
+                            <input type="tel" class="form-control  text-offwhite" name="cBussinessPhno_2"  placeholder="enter alternative phone number">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label> Bussiness Address line 1 </label>
+                            <input type="text" class="form-control  text-offwhite" id="cbAdd1" name="cBussinessAddress_1"  placeholder="enter Address line" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Bussiness Address line 2 </label>
+                            <input type="text" class="form-control  text-offwhite" name="cBussinessAddress_2" id="cbAdd2" placeholder="enter Address line " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-6">
+                          <div class="form-group add-items">
+                            <label> Bussiness Address line 3 </label>
+                            <input type="text" class="form-control  text-offwhite" name="cBussinessAddress_3" id="cbAdd3"  placeholder="enter Address line ">  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Location </label>
+                            <input type="text" class="form-control  text-offwhite" name="cBussinessLoc" id="cbloc"  placeholder="enter location " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3 col-md-6">
+                          <div class="form-group add-items">
+                            <label>District </label>
+                            <input type="text" class="form-control  text-offwhite" name="cBussinessDistrict" id="cbdist"  placeholder="enter District" required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-2 col-md-6">
+                          <div class="form-group add-items">
+                            <label>State </label>
+                            <input type="text" class="form-control text-offwhite" name="cBussinessState" id="cbstate"  placeholder="enter State " required>  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-2 col-md-6">
+                          <div class="form-group add-items">
+                            <label>Logo </label>
+                            <input type="file" class="form-control  text-offwhite" name="cBussinessLogo" >  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-2 col-md-6">
+                          <div class="form-group add-items">
+                            <label>File </label>
+                            <input type="file" class="form-control  text-offwhite" name="cBussinessFile" >  
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                          <div class="form-group add-items">
+                            <label>More about </label>
+                            <textarea class="to-do-textarea  text-offwhite" name="moreAbout"  placeholder="enter more about">  </textarea>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      
+                      <div class="add-items d-flex justify-content-center ">
+                        <button class=" btn btn-outline-primary " type="submit">Create</button> 
+                      </div>
+  
+                     
+                  </form>
+                  
+              </div>
+          </div>
+      
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#copy-details').change(function() {
+      if ($(this).is(':checked')) {
+        $('#cbAdd1').val($('#cAdd1').val());
+        $('#cbAdd2').val($('#cAdd2').val());
+        $('#cbAdd3').val($('#cAdd3').val());
+        $('#cbloc').val($('#cloc').val());
+        $('#cbdist').val($('#cdist').val());
+        $('#cbstate').val($('#cstate').val());
+      } else {
+        $('#cbAdd1').val('');
+      }
+    });
+  });
+</script>
+
+{% endblock %}

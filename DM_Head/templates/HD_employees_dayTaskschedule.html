@@ -1,0 +1,107 @@
+{% extends 'HD_base.html' %}
+{% load static %}
+{% block body %}
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="text-underline-remove" href="{% url 'head_dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item active text-md" aria-current="page">Employee Day Schedule</li>
+        </ol>
+      </nav>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12 col-xl-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2 ">
+                    <h4 class="card-title">Employee Days List</h4>
+                    <a href="{% url 'head_employee_schrduleAdd' %}">
+                    <button class="add btn btn-outline-primary mb-2">
+                        <span class="mdi mdi-plus-circle-outline mdi-18px"></span>
+                    </button> 
+                    </a>
+                </div>
+
+                <form action="{% url 'head_employees_schedule' %}" method="post">
+                    {% csrf_token %}
+                    <div class="add-items d-flex ">
+                        <select class=" select-listbox" name="employeeId" required id="empid">
+                            <option value="0" selected><span class="sechudule-name">---- select employee ----</span></option>
+                            {% for emp in employees %}
+                            <option value="{{emp.id}}"><span class="sechudule-name">{{emp.emp_name}}</span></option>
+                            {% endfor %}
+                        </select>
+
+                        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify mdi-18px"></i></button> 
+                    </div>
+                </form>
+                
+                <div class="day-wrapper">
+                    <div class="card-schedule d-flex  justify-content-between">
+                        <h6>{{today|date:"l"}}</h6>
+                        <p>{{today}}</p>
+                    </div>
+                </div>
+                {% if employee_name %}
+                    <p class="mt-3 text-center">{{employee_name.emp_name}}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xl-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Employee Schedule List</h4>
+                {% if schedules %}
+                <div class="schedule-task-wrapper">
+                    {% for schedule in schedules %}
+                    <div class="sechedule-task d-flex">
+                        <div class="left-date-time">
+                            {% if schedule.schedule_status == 1 %}
+                            <p class="schedule-date" style="text-decoration: line-through;">{{schedule.schedule_date}}</p>
+                            <p class="schedule-date" style="text-decoration: line-through;">Time - {{schedule.start_time}} to {{schedule.end_time}}</p>
+                            {% else %}
+                            <p class="schedule-date">{{schedule.schedule_date}}</p>
+                            <p class="schedule-date">Time - {{schedule.start_time}} to {{schedule.end_time}}</p>
+                            {% endif %}
+                           
+                        </div>
+                        <div class="right-scheduletask d-flex">
+                            <div class="inner-schedule-content">
+                                {% if schedule.schedule_status == 1 %}
+                                <h6 style="text-decoration: line-through;">{{schedule.schedule_head}}</h6>
+                                <p style="text-decoration: line-through;">{{schedule.todo_content}}</p>
+                                {% else %}
+                                <h6>{{schedule.schedule_head}}</h6>
+                                <p>{{schedule.todo_content}}</p>
+                                {% endif %}
+                            </div>
+                            <div class="schedule-change ml-2">
+                                <a href="{% url 'head_employeeScheduleEdit' schedule.id  %}" class="test-primary"><i class=" mdi mdi-pencil"></i></a>
+                                <a href="#" class="text-danger"><i class=" mdi mdi-close-box"></i></a>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+                {% else %}
+                <div class="d-flex justify-content-center">
+                    <img src="{% static 'images\file-icons\no-data-file.png' %}">
+                </div>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

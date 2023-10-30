@@ -1,0 +1,518 @@
+{% extends 'HD_base.html' %}
+{% load static %}
+{% block body %}
+
+
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="text-underline-remove" href="{% url 'head_dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item active text-md" aria-current="page">Leave</li>
+        </ol>
+      </nav>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12 col-xl-4 grid-margin stretch-card">
+        <div class="row">
+            <div class="col-xl-12 col-sm-12 grid-margin stretch-card">
+              <div class="card" id="apply-leave-btn">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-9">
+                      <div class="d-flex align-items-center align-self-start">
+                        <h4 class="mb-0">Apply Leave</h4>
+                        <!-- <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p> -->
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="icon icon-box-success ">
+                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <h6 class="text-muted font-weight-normal">To view and apply leaves</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-sm-12 grid-margin stretch-card">
+              <div class="card" id="view-leave-btn">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-9">
+                      <div class="d-flex align-items-center align-self-start">
+                        <h4 class="mb-0">My Leave</h4>
+                        <!-- <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p> -->
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="icon icon-box-success">
+                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <h6 class="text-muted font-weight-normal">To view my leave history</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-sm-12 grid-margin stretch-card">
+              <div class="card" id="employee-leave-btn">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-9">
+                      <div class="d-flex align-items-center align-self-start">
+                        <h4 class="mb-0">Leave Request</h4>
+                        {% if leave_request %}
+                        <p class="text-danger ml-2 mb-0 font-weight-medium" id="blinking">
+                          <span class="mdi mdi-checkbox-blank-circle  blinking" ></span></p>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="icon icon-box-danger mb-2">
+                        <span class="mdi mdi-arrow-bottom-left icon-item "></span>
+                      </div>
+                    </div>
+                  </div>
+                  <h6 class="text-muted font-weight-normal">To view the requested leave from employees</h6>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+    </div>
+    <div class="col-md-12 col-xl-8 grid-margin stretch-card">
+        <div class="card" id="apply-leave" >
+            <div class="card-body">
+              <div class="leave-form">
+                <h4 class="card-title mb-4">Leave apply </h4>
+                <form action="{% url 'head_leave' %}" method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-sm-12 col-lg-6 col-md-6">
+                      <div class="form-group">
+                        <label>from date</label>
+                        <input type="date" class="form-control text-offwhite" name="fromDate" id="schedule_fdate" required >                    
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 col-md-6">
+                      <div class="form-group">
+                        <label>to date</label>
+                        <input type="date" class="form-control text-offwhite" name="toDate" id="schedule_edate" required  >                    
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                      <div class="form-group">
+                        <label>Leave Type</label>
+                        <div class="form-control-raiod ">
+                          <span class="">  <input type="radio" class="" name="type_select" value="Half Day" > Half Day </span>
+                          <span class=""> <input type="radio" class="" name="type_select" value="Full Day" checked> Full Day </span>
+                        </div>
+              
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                      <div class="form-group add-items">
+                        <label>Reason</label>
+                        <textarea  class="to-do-textarea  text-offwhite" name="reason_content" id="" placeholder="enter reason.."></textarea>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-12 col-md-12 d-flex  justify-content-center  align-items-center">       
+                      <button class=" btn btn-outline-primary " type="submit"><i class="mdi mdi-file-check mdi-18px"></i>Leave Request</button> 
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+
+        <div class="card" id="view-leave" >
+          <div class="card-body">
+            <div class="leave-form">
+              <h4 class="card-title mb-4">My Leaves </h4>
+              <form action="#" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-12 col-lg-5 col-md-5">
+                    <div class="form-group">
+                      <label>from date</label>
+                      <input type="date" class="form-control text-offwhite" name="fromdate" id="my-fdate" required > 
+                      <span class="text-danger mt-1 text-small" id="error-box1" style="display: none;"></span>
+                      <input type="hidden" value="{{dash_details.id}}" id="myleave-searchId">                   
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-5 col-md-5">
+                    <div class="form-group">
+                      <label>to date</label>
+                      <input type="date" class="form-control text-offwhite" name="todate" id="my-edate"  required  >   
+                      <span class="text-danger mt-1 text-small" id="error-box2" style="display: none;"></span>                 
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-2 col-md-1 d-flex  justify-content-center  align-items-center">       
+                    <button class=" btn btn-outline-primary " type="button" id="myleave-search-btn"><i class="mdi mdi-magnify mdi-18px"></i></button> 
+                  </div>
+                 
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> status </th>
+                            <th> From Date </th>
+                            <th> To Date </th>
+                            <th> Leave Type </th>
+                            <th> reason </th>
+                           
+                           
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for leave in leave_data%}
+                          <tr> 
+
+                            <td>
+                              {% if leave.leave_status == 1 %}
+                              <div class="badge badge-outline-success">Approved</div>
+                              {% elif leave.leave_status == 2 %}
+                              <div class="badge badge-outline-danger">Rejected</div>
+                              {% else %}
+                              <div class="badge badge-outline-warning">Pending</div>
+                              {% endif %}
+                            </td>
+                            <td> {{leave.start_date}} </td>
+                            <td> {{leave.end_date}} </td>
+                            <td> {{leave.leave_type}}</td>
+                            <td> {{leave.leave_reason}} </td>
+                           
+                            
+                          </tr>
+                          {% endfor %}
+   
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="employee-leave" >
+          <div class="card-body">
+            <div class="leave-form">
+              <h4 class="card-title mb-4">employee Leave </h4>
+              <form action="#" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-12 col-lg-5 col-md-5">
+                    <div class="form-group">
+                      <label>select employee</label>
+                      <select class="form-control text-offwhite" name="#" id="leave-employeeId" required>
+                        {% for emp in employees %}
+                        <option value="{{emp.id}}">{{emp.emp_name}}</option>
+                        {% endfor %}
+                      </select>                      
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-3 col-md-3">
+                    <div class="form-group">
+                      <label>from date</label>
+                      <input type="date" class="form-control text-offwhite" name="#" id="emp-fdate" required >  
+                      <span class="text-danger mt-1 text-small" id="error-box3" style="display: none;"></span>                        
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-3 col-md-3">
+                    <div class="form-group">
+                      <label>to date</label>
+                      <input type="date" class="form-control text-offwhite" name="#" id="emp-edate" required  >  
+                      <span class="text-danger mt-1 text-small" id="error-box4" style="display: none;"></span>                        
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-lg-1 col-md-1 d-flex  justify-content-center  align-items-center">       
+                    <button class=" btn btn-outline-primary " type="button" id="leave-search-btn"><i class="mdi mdi-magnify mdi-18px"></i></button> 
+                  </div>
+                 
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> status </th>
+                            <th> Apply Date</th>
+                            <th> Employee</th>
+                            <th> From Date </th>
+                            <th> To Date </th>
+                            <th> Days </th>
+                            <th> Leave Type </th>
+                            <th> reason </th>
+                           
+                           
+                          </tr>
+                        </thead>
+                        <tbody id="employee_leave_table">
+                          {% for leave in empleave_data %}
+                          <tr> 
+
+                            <td>
+                              {% if leave.leave_status == 1 %}
+                              <div class="badge badge-outline-success">Approved</div>
+                              {% elif leave.leave_status == 2 %}
+                              <div class="badge badge-outline-danger">Rejected</div>
+                              {% else %}
+                              <input type="hidden" class="leaveId" id="leaveId" value="{{leave.id}}">
+                              <div class="badge badge-outline-success approve_click" id="approve_click" data-leave-id="{{ leave.id }}">Approve</div>
+                              
+                              <div class="badge badge-outline-danger reject_click" id="reject_click"  data-leave-id="{{ leave.id }}">Reject</div>
+                              
+                              {% endif %}
+                            </td>
+                            <td> {{leave.leave_apply_date}}</td>
+                            <td> {{leave.emp_id.emp_name}} </td>
+                            <td> {{leave.start_date}} </td>
+                            <td> {{leave.end_date}} </td>
+                            <td> <button class="btn btn-outline-danger">{{leave.no_of_days}}</button></td>
+                            <td> {{leave.leave_type}}</td>
+                            <td> {{leave.leave_reason}} </td>
+                           
+                            
+                          </tr>
+                          {% endfor %}
+   
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+</div>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // Get the current date in the required format (YYYY-MM-DD)
+    let currentDate = new Date().toISOString().split('T')[0];
+
+    // Set the minimum value to the current date
+    $('#schedule_fdate').attr('min', currentDate);
+    $('#schedule_edate').attr('min', currentDate);
+
+    // Set the default value to the current date
+    $('#schedule_fdate').val(currentDate);
+    $('#schedule_edate').val(currentDate);
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+
+    $('#view-leave').hide();
+    $('#employee-leave').hide();
+    
+    $('#apply-leave-btn').click(function() {
+      $('#apply-leave').show();
+      $('#view-leave').hide();
+      $('#employee-leave').hide();
+    });
+
+    $('#view-leave-btn').click(function() {
+      $('#apply-leave').hide();
+      $('#view-leave').show();
+      $('#employee-leave').hide();
+    });
+    $('#employee-leave-btn').click(function() {
+      $('#apply-leave').hide();
+      $('#view-leave').hide();
+      $('#employee-leave').show();
+    });
+  });
+</script>
+
+<!-- Leave status change -->
+<script>
+  $(document).ready(function () {
+
+  function attachEventHandlers() {
+    $('#employee_leave_table').on('click', '.approve_click', function () {
+        console.log('approve click')
+        var leaveId = $(this).siblings('.leaveId').val();
+        updateLeaveStatus(leaveId, 'approve');
+    });
+
+    $('#employee_leave_table').on('click', '.reject_click', function () {
+      console.log('reject click')
+        var leaveId = $(this).siblings('.leaveId').val();
+        updateLeaveStatus(leaveId, 'reject');
+    });
+  }
+
+
+    // Attach event handlers initially
+      attachEventHandlers();
+
+      // Function to update modal based on action (approve or reject)
+      function updateLeaveStatus(leaveId, action) {
+          // Make an AJAX call to update the modal based on leaveId and action
+          $.ajaxSetup({
+            headers: {
+                'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+            }
+          });
+          $.ajax({
+              url: "{% url 'head_leaveApprove_Reject' %}",
+              type: 'POST',
+              data: {
+                  leaveId: leaveId,
+                  action: action
+              },
+              success: function (response) {
+                $('#employee-leave').html(response.html_content)
+                $('#view-leave').html(response.my_leave)
+                var leaveRequest = JSON.parse(response.leave_request);
+
+                if (leaveRequest.length > 0) {
+                  $('#blinking').css('display', 'block');
+                } else {
+                    $('#blinking').css('display', 'none');
+                }
+              },
+              error: function (error) {
+                  console.log('AJAX error:', error);
+              }
+          });
+          
+      }
+  });
+</script>
+
+<!-- leave serch -->
+<script>
+$(document).ready(function() {
+  // Event handler for the myleave-serch-btn button
+  $('#myleave-search-btn').click(function() {
+      console.log('clicked')
+      var myId = $('#myleave-searchId').val(); 
+      var fdate = $('#my-fdate').val(); 
+      var edate = $('#my-edate').val(); 
+      var errorBox1 = $('#error-box1');
+      var errorBox2 = $('#error-box2');
+
+      if (fdate.trim() !== '') {
+          errorBox1.hide();
+      } 
+      else {
+          console.log('No value entered.');
+          errorBox1.text('Please enter the date.').show();  
+          setTimeout(function () {
+            errorBox1.hide();
+            }, 4000);  
+      }
+      
+      if (edate.trim() !== '') {
+        errorBox2.hide();
+      } 
+      else {
+          console.log('No value entered.');
+          errorBox2.text('Please enter the date.').show();  
+          setTimeout(function () {
+            errorBox2.hide();
+            }, 4000);  
+      }
+      if (fdate.trim() !== '' && edate.trim() !== ''  ) {
+        errorBox1.hide();
+        errorBox2.hide();
+         // Call the AJAX function and pass the values
+        LeaveSeach(myId,fdate,edate);
+      } 
+     
+  });
+
+  // Event handler for the leave-serch-btn button
+  $('#leave-search-btn').click(function() {
+
+      console.log('clicked')
+      var empId = $('#leave-employeeId').val();
+      var fdate = $('#emp-fdate').val(); 
+      var edate = $('#emp-edate').val();  
+      var errorBox3 = $('#error-box3');
+      var errorBox4 = $('#error-box4');
+
+      if (fdate.trim() !== '') {
+          errorBox3.hide();
+      } 
+      else {
+          console.log('No value entered.');
+          errorBox3.text('Please enter the date.').show(); 
+
+          
+          setTimeout(function () {
+            errorBox3.hide();
+            }, 4000);  
+      }
+      if (edate.trim() !== '') {
+        errorBox4.hide();
+      } 
+      else {
+          console.log('No value entered.');
+          errorBox4.text('Please enter the date.').show();  
+          setTimeout(function () {
+            errorBox4.hide();
+            }, 4000); 
+      }
+      if (fdate.trim() !== '' && edate.trim() !== ''  ) {
+        errorBox4.hide();
+        errorBox3.hide();
+        // Call the AJAX function and pass the values
+        LeaveSeach(empId,fdate,edate);
+      } 
+    
+  });
+});
+
+// Function to handle AJAX call
+function LeaveSeach(seachId,from_date,end_date) {
+  $.ajaxSetup({
+    headers: {
+        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+    }
+  });
+  $.ajax({
+      url: "{% url 'head_leaveSearch' %}",  // Replace with your actual AJAX endpoint
+      type: 'POST',
+      data: {
+          searchValue: seachId,
+          f_Date: from_date,
+          e_Date: end_date
+      },
+      success: function (response) {
+        $('#employee-leave').html(response.html_content)
+        $('#view-leave').html(response.my_leave)
+        var leaveRequest = JSON.parse(response.leave_request);
+
+        if (leaveRequest.length > 0) {
+          $('#blinking').css('display', 'block');
+        } else {
+            $('#blinking').css('display', 'none');
+        }
+      },
+      error: function(error) {
+          console.log('AJAX error:', error);
+      }
+  });
+}
+</script>
+
+{% endblock %}
