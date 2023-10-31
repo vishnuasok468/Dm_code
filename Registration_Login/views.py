@@ -155,6 +155,7 @@ def login_submitt(request):
                         # Digital Marketing Head -     1
                         # Team Lead              -     2
                         # Exicutive              -     3
+                        # hr                     -     4
                         
                         if dash_details.emp_designation_id.dashboard_id == 1:
                         

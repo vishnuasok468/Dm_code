@@ -1,0 +1,60 @@
+{% extends 'hr_base.html' %}
+{% load static %}
+{% block body %}
+
+
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Waste Data</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th> Full Name </th>
+                                <th> Email id </th>
+                                <th> Phone Number </th>
+                                <th> Qualification </th>
+                                <th>Year of Passout</th>
+                                <th>College</th>
+                                <th>Location</th>
+                                <th> fresher or experienced </th>
+                                <th> Previous Designation</th>
+                                <th>Previous Company</th>
+                                <th>Reason for Registration</th>
+                                
+    
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.name}}</td>
+                                <td> {{i.email}} </td>
+                                <td> {{i.Mobile_no}} </td>
+                                <td>{{i.qualification}}</td>
+                                <td>{{i.passout_year}}</td>
+                                <td>{{i.college_name}}</td>
+                                <td>{{i.location}}</td>
+                                <td>{{i.expereince}}</td>
+                                <td>{{i.previous_designation}}</td>
+                                <td>{{i.previous_company}}</td>
+                                <td>{{i.reason_for_registration}}</td>
+                                
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
