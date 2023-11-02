@@ -10,6 +10,7 @@ urlpatterns = [
     path('hr_wastedata',views.hr_wastedata,name='hr_wastedata'),
     path('hr_password',views.hr_password,name='hr_password'),
     path('hr_logout',views.hr_logout,name='hr_logout'),
+    path('hr_profile',views.hr_profile,name='hr_profile'),
 
 
     path('hr_passwordupdate',views.hr_passwordupdate,name='hr_passwordupdate'),

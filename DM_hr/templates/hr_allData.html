@@ -25,6 +25,7 @@
                                 <th>Previous Company</th>
                                 <th>Reason for Registration</th>
                                 <th>Response</th>
+                                <th>Reason</th>
                                 <th></th>
     
 
@@ -46,6 +47,11 @@
                                 <td>{{i.previous_company}}</td>
                                 <td>{{i.reason_for_registration}}</td>
                                 <td>{{i.response}}</td>
+                                {% if i.reason %}
+                                <td>{{i.reason}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
                             </tr>
                             {% endfor %}
 

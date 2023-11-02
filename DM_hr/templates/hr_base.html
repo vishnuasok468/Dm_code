@@ -46,7 +46,7 @@
                                 class="mdi mdi-dots-vertical"></i></a>
                         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
                             aria-labelledby="profile-dropdown">
-                            <a href="#" class="dropdown-item preview-item">
+                            <a href="{% url 'hr_profile' %}" class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-dark rounded-circle">
                                         <i class="mdi mdi-settings text-primary"></i>
@@ -76,9 +76,9 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="{% url 'hr_base' %}">
                         <span class="menu-icon">
-                            <i class="mdi mdi-account-outline"></i>
+                            <i class="mdi mdi-speedometer"></i>
                         </span>
-                        <span class="menu-title">Profile</span>
+                        <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
 
@@ -267,7 +267,7 @@
                                 aria-labelledby="profileDropdown">
                                 <h6 class="p-3 mb-0">Profile</h6>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item" href="{% url 'hr_base' %}">
+                                <a class="dropdown-item preview-item" href="{% url 'hr_profile' %}">
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
                                             <i class="mdi mdi-settings text-success"></i>

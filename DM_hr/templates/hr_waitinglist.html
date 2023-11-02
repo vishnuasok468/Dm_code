@@ -24,7 +24,7 @@
                                 <th> Previous Designation</th>
                                 <th>Previous Company</th>
                                 <th>Reason for Registration</th>
-                                <th>Response</th>
+                                <th>Reason</th>
                                 <th></th>
 
 
@@ -45,12 +45,12 @@
                                 <td>{{i.previous_designation}}</td>
                                 <td>{{i.previous_company}}</td>
                                 <td>{{i.reason_for_registration}}</td>
-                                <td>{{i.response}}</td>
+                                <td>{{i.reason}}</td>
                                 <td>
-                                    <a href="#" data-toggle="modal" data-target="#mymodal">
+                                    <a href="#" data-toggle="modal" data-target="#mymodal{{i.id}}">
                                         <div class="badge badge-outline-success">Mark Response</div>
                                     </a>
-                                    <div class="modal" id="mymodal">
+                                    <div class="modal" id="mymodal{{i.id}}">
                                         <div class="modal-dialog" >
                                             <div class="modal-content" style="background-color: #434a54;">
                                                 <div class="modal-header">

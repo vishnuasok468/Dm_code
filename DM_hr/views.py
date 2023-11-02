@@ -12,6 +12,27 @@ def hr_base(request):
             return redirect('/')
         emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
         dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
+        all_count=candidateDetails.objects.filter(hr_id=emp_dash).count()
+        n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
+        w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
+        a_count=n_count+w_count
+        content = {'emp_dash':emp_dash,
+                    'dash_details':dash_details,
+                    'n_count':n_count,
+                    'w_count':w_count,
+                    'a_count':a_count,
+                    'all_count':all_count
+                }
+        return render(request,'hr_dashboard.html',content)
+    
+def hr_profile(request):
+    if 'emp_id' in request.session:
+        if request.session.has_key('emp_id'):
+            emp_id = request.session['emp_id']
+        else:
+            return redirect('/')
+        emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
+        dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
         n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
         w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
         a_count=n_count+w_count
@@ -204,6 +225,7 @@ def add_response_from_waitinglist(request,pk):
     if request.method == 'POST':
         d_response=request.POST['response']
         data.response=d_response
+        data.reason=''
         data.status='responded'
         data.save()
         success=True
@@ -232,59 +254,69 @@ def add_response_from_waitinglist(request,pk):
 
 def add_to_waitingList(request,pk):
     data= candidateDetails.objects.get(id=pk)
-    data.response='In WaitingList'
-    data.status='waitlist'
-    data.save()
-    waitlist_text='Added to waitlist'
-    waitlist=True
-    if 'emp_id' in request.session:
-        if request.session.has_key('emp_id'):
-            emp_id = request.session['emp_id']
-    emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
-    dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
-    data= candidateDetails.objects.filter(hr_id=emp_dash,status='new')
-    n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
-    w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
-    a_count=n_count+w_count
-    content={
-        'emp_dash':emp_dash,
-        'dash_details':dash_details,
-        'data':data,
-        'warning_text':waitlist_text,
-        'waitlist':waitlist,
-        'n_count':n_count,
-        'w_count':w_count,
-        'a_count':a_count
-    }
-    return render(request,'hr_newData.html',content)
+    if request.method == 'POST':
+        d_reason =request.POST['wait_reason']
+        data.reason=d_reason
+        data.response='In WaitingList'
+        data.status='waitlist'
+        data.save()
+        waitlist_text='Added to waitlist'
+        waitlist=True
+        if 'emp_id' in request.session:
+            if request.session.has_key('emp_id'):
+                emp_id = request.session['emp_id']
+        emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
+        dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
+        data= candidateDetails.objects.filter(hr_id=emp_dash,status='new')
+        n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
+        w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
+        a_count=n_count+w_count
+        content={
+            'emp_dash':emp_dash,
+            'dash_details':dash_details,
+            'data':data,
+            'warning_text':waitlist_text,
+            'waitlist':waitlist,
+            'n_count':n_count,
+            'w_count':w_count,
+            'a_count':a_count
+        }
+        return render(request,'hr_newData.html',content)
+    return redirect('hr_newdata')
+
 
 def add_to_wastedata(request,pk):
     data= candidateDetails.objects.get(id=pk)
-    data.status='wastedata'
-    data.response='wastedata'
-    data.save()
-    waitlist_text='Added to wastedata'
-    error=True
-    if 'emp_id' in request.session:
-        if request.session.has_key('emp_id'):
-            emp_id = request.session['emp_id']
-    emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
-    dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
-    data= candidateDetails.objects.filter(hr_id=emp_dash,status='new')
-    n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
-    w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
-    a_count=n_count+w_count
-    content={
-        'emp_dash':emp_dash,
-        'dash_details':dash_details,
-        'data':data,
-        'error_text':waitlist_text,
-        'error':error,
-        'n_count':n_count,
-        'w_count':w_count,
-        'a_count':a_count
-    }
-    return render(request,'hr_newData.html',content)
+    if request.method == 'POST':
+        d_reason=request.POST['waste_reason']
+        data.reason=d_reason
+        data.status='wastedata'
+        data.response='It is a wastedata'
+        data.save()
+        waitlist_text='Added to wastedata'
+        error=True
+        if 'emp_id' in request.session:
+            if request.session.has_key('emp_id'):
+                emp_id = request.session['emp_id']
+        emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
+        dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
+        data= candidateDetails.objects.filter(hr_id=emp_dash,status='new')
+        n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
+        w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
+        a_count=n_count+w_count
+        content={
+            'emp_dash':emp_dash,
+            'dash_details':dash_details,
+            'data':data,
+            'error_text':waitlist_text,
+            'error':error,
+            'n_count':n_count,
+            'w_count':w_count,
+            'a_count':a_count
+        }
+        return render(request,'hr_newData.html',content)
+    return redirect('hr_newdata')
+
 
 def hr_profileupdate(request):
     if 'emp_id' in request.session:

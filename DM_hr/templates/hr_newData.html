@@ -24,7 +24,6 @@
                                 <th> Previous Designation</th>
                                 <th>Previous Company</th>
                                 <th>Reason for Registration</th>
-                                <th>Response</th>
                                 <th></th>
 
 
@@ -45,15 +44,15 @@
                                 <td>{{i.previous_designation}}</td>
                                 <td>{{i.previous_company}}</td>
                                 <td>{{i.reason_for_registration}}</td>
-                                <td>{{i.response}}</td>
                                 <td>
-                                    <a href="#" data-toggle="modal" data-target="#mymodal">
+                                    <a href="#" data-toggle="modal" data-target="#mymodal1{{i.id}}">
                                         <div class="badge badge-outline-success">Mark Response</div>
                                     </a>
-                                    <div class="modal" id="mymodal">
+                                    <div class="modal" id="mymodal1{{i.id}}">
                                         <div class="modal-dialog" >
                                             <div class="modal-content" style="background-color: #434a54;">
                                                 <div class="modal-header">
+                                                    <h4>{{i.name}}</h4>
                                                     <button type="button" class="close"
                                                         data-dismiss="modal">&times;</button>
                                                 </div>
@@ -65,10 +64,55 @@
                                                     </form>
                                                     
                                                 </div>
-                                                <div class="modal-footer" style="display: flex;align-content: space-between;">
-                                                    <a href="{% url 'add_to_waitingList' i.id %}"><div class="badge badge-outline-warning">Add to Waiting list</div></a>
-                                                    <a href="{% url 'add_to_wastedata' i.id %}"><div class="badge badge-outline-danger">Add to Waste Data</div></a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <a href="#" data-toggle="modal" data-target="#mymodal2{{i.id}}">
+                                        <div class="badge badge-outline-warning">Add to Waitlist</div>
+                                    </a>
+                                    <div class="modal" id="mymodal2{{i.id}}">
+                                        <div class="modal-dialog" >
+                                            <div class="modal-content" style="background-color: #434a54;">
+                                                <div class="modal-header">
+                                                    <h4>{{i.name}}</h4>
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
                                                 </div>
+                                                <div class="modal-body">
+                                                    <form action="{% url 'add_to_waitingList' i.id %}" style="display: grid;" method="post">
+                                                        {% csrf_token %}
+                                                        <textarea name="wait_reason" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required ></textarea><br><br>
+                                                        <button type="submit" class="btn btn-outline-warning">Add to Waitlist</button>
+                                                    </form>
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <a href="#" data-toggle="modal" data-target="#mymodal3{{i.id}}">
+                                        <div class="badge badge-outline-danger">Add to WasteData</div>
+                                    </a>
+                                    <div class="modal" id="mymodal3{{i.id}}">
+                                        <div class="modal-dialog" >
+                                            <div class="modal-content" style="background-color: #434a54;">
+                                                <div class="modal-header">
+                                                    <h4>{{i.name}}</h4>
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{% url 'add_to_wastedata' i.id %}" style="display: grid;" method="post">
+                                                        {% csrf_token %}
+                                                        <textarea name="waste_reason" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required ></textarea><br><br>
+                                                        <button type="submit" class="btn btn-outline-danger">Add to WasteData</button>
+                                                    </form>
+                                                    
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>

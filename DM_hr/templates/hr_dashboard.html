@@ -1,0 +1,89 @@
+{% extends 'hr_base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="row">
+  <div class="col-sm-4 grid-margin">
+    <div class="card" id="card1">
+      <div class="card-body">
+        <h5>New Data</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{n_count}}</h2>
+              <!--<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>-->
+            </div>
+            <!--<h6 class="text-muted font-weight-normal">11.38% Since last month</h6>-->
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+            <i class="icon-lg mdi mdi-new-box text-primary ml-auto"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 grid-margin">
+    <div class="card" id="card2">
+      <div class="card-body">
+        <h5>All Data</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{all_count}}</h2>
+              <!--<p class="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>-->
+            </div>
+            <!--<h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>-->
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+            <i class="icon-lg mdi mdi-playlist-edit text-danger ml-auto"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 grid-margin">
+    <div class="card" id="card3">
+      <div class="card-body">
+        <h5>Waitlist</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{w_count}}</h2>
+              <!--<p class="text-danger ml-2 mb-0 font-weight-medium">-2.1% </p>-->
+            </div>
+            <!--<h6 class="text-muted font-weight-normal">2.27% Since last month</h6>-->
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+            <i class="icon-lg mdi mdi-calendar-today text-success ml-auto"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Get the card element
+  const card1 = document.getElementById('card1');
+  const card2 = document.getElementById('card2');
+  const card3 = document.getElementById('card3');
+
+  // Add a click event listener to the card
+  card1.addEventListener('click', function () {
+    // Redirect to the desired page
+    window.location.href = '{% url "hr_newdata" %}';
+  });
+
+  card2.addEventListener('click', function () {
+    // Redirect to the desired page
+    window.location.href = '{% url "hr_alldata" %}';
+  });
+
+  card3.addEventListener('click', function () {
+    // Redirect to the desired page
+    window.location.href = '{% url "hr_waitlist" %}';
+  });
+
+</script>
+
+{% endblock %}

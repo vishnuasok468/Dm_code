@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import *
+from DM_hr.models import candidateDetails
 from Supper_admin.views import supper_admin_dashboard
 from django.http import JsonResponse
 
@@ -141,6 +142,10 @@ def login_submitt(request):
                     
                     try:
                         dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
+                        all_count=candidateDetails.objects.filter(hr_id=emp_dash).count()
+                        n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
+                        w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
+                        a_count=n_count+w_count
                         success=True
                         success_text = 'Your authenticated successfully.'
                         
@@ -148,6 +153,16 @@ def login_submitt(request):
                                    'dash_details':dash_details,
                                    'success':success,
                                    'success_text':success_text}
+                        
+                        hr_content = {'emp_dash':emp_dash,
+                                   'dash_details':dash_details,
+                                   'success':success,
+                                   'success_text':success_text,
+                                   'n_count':n_count,
+                                    'w_count':w_count,
+                                    'a_count':a_count,
+                                    'all_count':all_count
+                                    }
                         
                         # Dashbord List-----
                         
@@ -169,7 +184,7 @@ def login_submitt(request):
                             return render(request,'Executive_dashboard.html',content)
                         
                         elif dash_details.emp_designation_id.dashboard_id == 4:
-                            return render(request,'hr_profile.html',content)
+                            return render(request,'hr_dashboard.html',hr_content)
                         
                         else:
                             return render(request,'error-404.html')
