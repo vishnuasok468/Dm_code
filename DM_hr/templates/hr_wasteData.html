@@ -24,6 +24,7 @@
                                 <th> Previous Designation</th>
                                 <th>Previous Company</th>
                                 <th>Reason for Registration</th>
+                                <th>Reason for WasteData</th>
                                 
     
 
@@ -41,10 +42,26 @@
                                 <td>{{i.college_name}}</td>
                                 <td>{{i.location}}</td>
                                 <td>{{i.expereince}}</td>
+
+                                {% if i.previous_designation %}
                                 <td>{{i.previous_designation}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
+                                {% if i.previous_company %}
                                 <td>{{i.previous_company}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
                                 <td>{{i.reason_for_registration}}</td>
-                                
+
+                                {% if i.reason %}
+                                <td>{{i.reason}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}                                
                             </tr>
                             {% endfor %}
 

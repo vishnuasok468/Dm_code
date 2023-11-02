@@ -52,7 +52,7 @@ def hr_alldata(request):
             return redirect('/')
         emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
         dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
-        data= candidateDetails.objects.filter(hr_id=emp_dash)
+        data= candidateDetails.objects.filter(hr_id=emp_dash).order_by('-data_added_date')
         n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
         w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
         a_count=n_count+w_count
@@ -134,7 +134,7 @@ def hr_newdata(request):
             return redirect('/')
         emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
         dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
-        data= candidateDetails.objects.filter(hr_id=emp_dash,status='new')
+        data= candidateDetails.objects.filter(hr_id=emp_dash,status='new').order_by('-data_added_date')
         n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
         w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
         a_count=n_count+w_count
@@ -155,7 +155,7 @@ def hr_waitlist(request):
             return redirect('/')
         emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
         dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
-        data= candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist')
+        data= candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').order_by('-data_added_date')
         n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
         w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
         a_count=n_count+w_count
@@ -176,7 +176,7 @@ def hr_wastedata(request):
             return redirect('/')
         emp_dash = LogRegister_Details.objects.get(id=emp_id,active_status=1)
         dash_details = EmployeeRegister_Details.objects.get(logreg_id=emp_dash,emp_active_status=1)
-        data= candidateDetails.objects.filter(hr_id=emp_dash,status='wastedata')
+        data= candidateDetails.objects.filter(hr_id=emp_dash,status='wastedata').order_by('-data_added_date')
         n_count=candidateDetails.objects.filter(hr_id=emp_dash,status='new').count()
         w_count=candidateDetails.objects.filter(hr_id=emp_dash,status='waitlist').count()
         a_count=n_count+w_count
@@ -193,6 +193,8 @@ def add_response(request,pk):
     data= candidateDetails.objects.get(id=pk)
     if request.method == 'POST':
         d_response=request.POST['response']
+        d_reason=request.POST['response_reason']
+        data.reason=d_reason
         data.response=d_response
         data.status='responded'
         data.save()
@@ -224,8 +226,9 @@ def add_response_from_waitinglist(request,pk):
     data= candidateDetails.objects.get(id=pk)
     if request.method == 'POST':
         d_response=request.POST['response']
+        d_reason=request.POST['response_reason']
         data.response=d_response
-        data.reason=''
+        data.reason=d_reason
         data.status='responded'
         data.save()
         success=True

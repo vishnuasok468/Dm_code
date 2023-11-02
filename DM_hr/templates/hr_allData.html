@@ -43,10 +43,27 @@
                                 <td>{{i.college_name}}</td>
                                 <td>{{i.location}}</td>
                                 <td>{{i.expereince}}</td>
+                                
+                                {% if i.previous_designation %}
                                 <td>{{i.previous_designation}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
+                                {% if i.previous_company %}
                                 <td>{{i.previous_company}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
                                 <td>{{i.reason_for_registration}}</td>
+
+                                {% if i.response %}
                                 <td>{{i.response}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %} 
+
                                 {% if i.reason %}
                                 <td>{{i.reason}}</td>
                                 {% else %}

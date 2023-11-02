@@ -41,8 +41,19 @@
                                 <td>{{i.college_name}}</td>
                                 <td>{{i.location}}</td>
                                 <td>{{i.expereince}}</td>
+                                
+                                {% if i.previous_designation %}
                                 <td>{{i.previous_designation}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
+                                {% if i.previous_company %}
                                 <td>{{i.previous_company}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
                                 <td>{{i.reason_for_registration}}</td>
                                 <td>
                                     <a href="#" data-toggle="modal" data-target="#mymodal1{{i.id}}">
@@ -52,14 +63,16 @@
                                         <div class="modal-dialog" >
                                             <div class="modal-content" style="background-color: #434a54;">
                                                 <div class="modal-header">
-                                                    <h4>{{i.name}}</h4>
                                                     <button type="button" class="close"
                                                         data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{% url 'add_response' i.id %}" style="display: grid;" method="post">
                                                         {% csrf_token %}
+                                                        <label for="">Response</label>
                                                         <textarea name="response" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required ></textarea><br><br>
+                                                        <label for="">Reason</label>
+                                                        <textarea name="response_reason" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required ></textarea><br><br>
                                                         <button type="submit" class="btn btn-outline-success">Add Response</button>
                                                     </form>
                                                     
@@ -76,13 +89,13 @@
                                         <div class="modal-dialog" >
                                             <div class="modal-content" style="background-color: #434a54;">
                                                 <div class="modal-header">
-                                                    <h4>{{i.name}}</h4>
                                                     <button type="button" class="close"
                                                         data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{% url 'add_to_waitingList' i.id %}" style="display: grid;" method="post">
                                                         {% csrf_token %}
+                                                        <label for="">Reason</label>
                                                         <textarea name="wait_reason" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required ></textarea><br><br>
                                                         <button type="submit" class="btn btn-outline-warning">Add to Waitlist</button>
                                                     </form>
@@ -100,13 +113,13 @@
                                         <div class="modal-dialog" >
                                             <div class="modal-content" style="background-color: #434a54;">
                                                 <div class="modal-header">
-                                                    <h4>{{i.name}}</h4>
                                                     <button type="button" class="close"
                                                         data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{% url 'add_to_wastedata' i.id %}" style="display: grid;" method="post">
                                                         {% csrf_token %}
+                                                        <label for="">Reason</label>
                                                         <textarea name="waste_reason" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required ></textarea><br><br>
                                                         <button type="submit" class="btn btn-outline-danger">Add to WasteData</button>
                                                     </form>

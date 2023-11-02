@@ -24,7 +24,7 @@
                                 <th> Previous Designation</th>
                                 <th>Previous Company</th>
                                 <th>Reason for Registration</th>
-                                <th>Reason</th>
+                                <th>Reason for WaitingList</th>
                                 <th></th>
 
 
@@ -42,8 +42,19 @@
                                 <td>{{i.college_name}}</td>
                                 <td>{{i.location}}</td>
                                 <td>{{i.expereince}}</td>
+                               
+                                {% if i.previous_designation %}
                                 <td>{{i.previous_designation}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
+                                {% if i.previous_company %}
                                 <td>{{i.previous_company}}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+
                                 <td>{{i.reason_for_registration}}</td>
                                 <td>{{i.reason}}</td>
                                 <td>
@@ -60,7 +71,10 @@
                                                 <div class="modal-body">
                                                     <form action="{% url 'add_response_from_waitinglist' i.id %}" style="display: grid;" method="post">
                                                         {% csrf_token %}
+                                                        <label for="">Response</label>
                                                         <textarea name="response" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required></textarea><br><br>
+                                                        <label for="">Reason</label>
+                                                        <textarea name="response_reason" cols="30" rows="5" style="width: 100%;background-color: #2A3038;color: rgba(215, 213, 213, 0.805);" required></textarea><br><br>
                                                         <button type="submit" class="btn btn-outline-success">Add Response</button>
                                                     </form>
                                                     
